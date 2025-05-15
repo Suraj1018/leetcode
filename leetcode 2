@@ -1,0 +1,54 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+  //we need one more linkedlist to store the data 
+  let result=new ListNode(0);
+  //we need pointer to traverse now
+  let ptr= result;
+  //we need element to store our carry that we are going to after addition 
+  let carry =0;
+
+  //we need to run the loop till both l1 and l2 gets into null value so we are using while loop here 
+  while(l1!=null || l2!=null)
+  {
+    //we need an element here to store the sum 
+    let sum=0+carry;
+    
+    //we need to traverse through each and every element in l1
+    if(l1!=null)
+    {
+        sum=sum+l1.val;
+        l1=l1.next; //this is to point to the next element in the linked list of l1
+    }
+    
+    //we need to traverse through each and every element in l2
+    if(l2!=null)
+    {
+        sum=sum+l2.val;
+        l2=l2.next; //this is to point to the next element in the linked list of l1
+    }
+
+    carry=Math.floor(sum/10); //its very important to use Math.floor here because in js it gives float values so it will through runtime error if you dont use it 
+    sum=sum%10; // by using % we will get the remainder so that we need to push to the node
+    ptr.next=new ListNode(sum); //pushing the sum value to the linkedlist 
+    ptr=ptr.next; // here we need to point to pointer to the next node 
+  } 
+
+  if(carry>0) // this is to check if something is left in carry we can add that by adding new node to linkedlist 
+  {
+    ptr.next=new ListNode(carry);
+    ptr=ptr.next;
+  }
+
+  return result.next;//since the first element is dummy you need to point from where the real solution starts  
+};
